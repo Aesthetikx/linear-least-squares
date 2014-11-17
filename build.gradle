@@ -15,6 +15,7 @@ repositories {
 dependencies {
   compile 'org.scala-lang:scala-library:2.11.1'
   compile 'org.scalanlp:breeze_2.11:0.10'
+  compile 'org.scalanlp:breeze-viz_2.11:0.9'
 }
 
 task run(type: JavaExec, dependsOn: classes) {

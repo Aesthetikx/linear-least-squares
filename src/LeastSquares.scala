@@ -1,6 +1,7 @@
 import scala.io.Source
 
 import breeze.linalg._
+import breeze.plot._
 
 object LeastSquares extends App {
 
@@ -22,6 +23,19 @@ object LeastSquares extends App {
 
   val B: DenseMatrix[Double] = new DenseMatrix(101, 1, dataZ);
 
-  val xStar: DenseMatrix[Double] = inv(A.t * A) * A.t * B;
+  val xStar: DenseVector[Double] = (inv(A.t * A) * A.t * B).toDenseVector;
+
+  val zStar: DenseVector[Double] = new DenseVector(dataX.map { x =>
+    xStar(0) * x * x + xStar(1) * x + xStar(2);
+  });
+
+  val f = Figure();
+  val p = f.subplot(0);
+  p += plot(dataX, dataZ, '.');
+  p += plot(dataX, zStar);
+  p.title = "Quadratic Approximation of a Tennis Ball Flight";
+  p.xlabel = "X (feet)";
+  p.ylabel = "Z (feet)";
+  f.saveas("plot.png");
 
 }

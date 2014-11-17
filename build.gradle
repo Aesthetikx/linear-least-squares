@@ -1,0 +1,23 @@
+apply plugin: 'scala'
+
+sourceSets {
+  main {
+    scala {
+      srcDirs = ['src']
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'org.scala-lang:scala-library:2.11.1'
+}
+
+task run(type: JavaExec, dependsOn: classes) {
+  main = 'LeastSquares'
+  classpath sourceSets.main.runtimeClasspath
+  classpath configurations.runtime
+}

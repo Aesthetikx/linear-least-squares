@@ -1,10 +1,25 @@
+import scala.io.Source
+
+import breeze.linalg.DenseMatrix
+
 object LeastSquares extends App {
 
   val filename = "data.txt";
 
-  for (line <- scala.io.Source.fromFile(filename).getLines()) {
+  val data: Array[Array[Double]] = Source.fromFile(filename).getLines.toArray.map { line =>
     val Array(step, x, y) = line.split("\\s+");
-    println(s"$step, $x, $y");
+    Array(x.toDouble, y.toDouble)
   }
+
+  val dataX: Array[Double] = data.map(_(0));
+  val dataZ: Array[Double] = data.map(_(1));
+
+  // DenseMatrix constructor is column major, construct 3 row x 101 column, then transpose
+  val A: DenseMatrix[Double] = new DenseMatrix(3, 101, dataX.map { x =>
+    // c1 * x^2 + c2 * x + c3
+    Array(x * x, x, 1);
+  }.flatten).t;
+
+  val B: DenseMatrix[Double] = new DenseMatrix(101, 1, dataZ);
 
 }

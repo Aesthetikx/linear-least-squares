@@ -1,6 +1,6 @@
 import scala.io.Source
 
-import breeze.linalg.DenseMatrix
+import breeze.linalg._
 
 object LeastSquares extends App {
 
@@ -21,5 +21,7 @@ object LeastSquares extends App {
   }.flatten).t;
 
   val B: DenseMatrix[Double] = new DenseMatrix(101, 1, dataZ);
+
+  val xStar: DenseMatrix[Double] = inv(A.t * A) * A.t * B;
 
 }

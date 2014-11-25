@@ -25,6 +25,7 @@ object LeastSquares extends App {
   val B: DenseMatrix[Double] = new DenseMatrix(101, 1, dataZ);
 
   val xStar: DenseVector[Double] = (inv(A.t * A) * A.t * B).toDenseVector;
+  println(xStar);
 
   def zStar(domain: Array[Double]): Array[Double] = domain.map { x =>
     xStar(0) * x * x + xStar(1) * x + xStar(2);
@@ -50,8 +51,6 @@ object LeastSquares extends App {
   // Estimation
   val fitFigure = Figure();
   val domain: Array[Double] = (0 to 20).toArray.map(_.toDouble)
-  fitFigure.width = 1200;
-  fitFigure.height = 800;
   val fitPlot = fitFigure.subplot(0);
   fitPlot += plot(dataX, dataZ, '.');
   fitPlot += plot(domain, zStar(domain));
@@ -63,8 +62,6 @@ object LeastSquares extends App {
 
   // Error
   val errorFigure = Figure();
-  errorFigure.width = 1200;
-  errorFigure.height = 800;
   val errorPlot = errorFigure.subplot(0);
   errorPlot += plot(N.map { n => n.toDouble }, error, '-');
   errorPlot += plot(N.map { n => n.toDouble }, N.map { n => 3.0e-3 }, '-');
